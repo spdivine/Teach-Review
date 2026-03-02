@@ -1,0 +1,40 @@
+---
+description: Production constraints, structure, security, and UI-first rules
+alwaysApply: true
+---
+
+# Peak Teach Review — Project Rules (Production)
+
+## Hard constraints
+- Do **not** change or create any file unless the user explicitly lists it in the request.
+- Do **not** refactor unrelated code.
+- Preserve existing comments and formatting unless asked.
+- Prefer small, localized edits over sweeping rewrites.
+
+## Phase 2: UI-first development (Design before logic)
+- Design the UI/UX first (layout, copy, states, empty/loading/error) before adding backend or business logic.
+- Reuse existing UI primitives; do not invent new patterns per prompt.
+- Lock design tokens:
+  - Color: use existing semantic tokens (`bg-background`, `text-foreground`, `border-border`, `text-muted-foreground`, etc.). No ad-hoc hex/rgb colors.
+  - Spacing: use Tailwind spacing scale; no inline spacing styles.
+  - Typography: reuse existing type patterns (hero/section headings/body/meta) — do not introduce arbitrary font sizes.
+
+## Structure rules
+- New UI primitives: `src/components/ui`
+- Shared UI (composed components): `src/components/shared`
+- Feature code: `src/features/<feature-name>`
+- Validation schemas: `src/lib/validation`
+- Server/business logic: `src/server/services`
+
+If the repo does not yet contain these paths, ask for an explicit file list before creating/migrating folders.
+
+## Security rules
+- Never trust client input. Validate on the server.
+- Every data access must enforce authorization + ownership checks.
+- No secrets in client code. Use server env vars only.
+- Handle errors with safe user messages + detailed server logs.
+
+## Output rules (responses)
+- Explain what files you changed and why.
+- Provide code blocks for each file edited.
+- If uncertain, ask for the exact file list rather than guessing.
